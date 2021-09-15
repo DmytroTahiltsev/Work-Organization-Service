@@ -1,22 +1,29 @@
 
 import { Layout, Menu, Row } from "antd";
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
+import { useActions } from "../hooks/useActions";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 import { RouteNames } from "../router";
+import { AuthActionCreators } from "../store/reducers/auth/actions-creators";
 
 const Navbar: React.FC = () => {
-    const {isAuth} = useTypedSelector(state => state.auth)
+    const {isAuth, user} = useTypedSelector(state => state.auth)
     const router = useHistory()
+    const {logout} = useActions()
     return(
         <Layout.Header>
             <Row justify="end">
                 {isAuth
                     ?
                     <>
+                        <div style={{color: 'white'}}>
+                            {user.username}
+                        </div>
                         <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} selectable={false}>
                             <Menu.Item 
-                                onClick={() => console.log('logout')}
+                                onClick={() => logout()}
                                 key={1}
                             >
                                 Logout
