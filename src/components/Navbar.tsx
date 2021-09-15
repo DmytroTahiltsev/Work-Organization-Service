@@ -2,15 +2,16 @@
 import { Layout, Menu, Row } from "antd";
 import React from "react";
 import { useHistory } from "react-router";
+import { useTypedSelector } from "../hooks/useTypedSelector";
 import { RouteNames } from "../router";
 
 const Navbar: React.FC = () => {
-    const auth = true
+    const {isAuth} = useTypedSelector(state => state.auth)
     const router = useHistory()
     return(
         <Layout.Header>
             <Row justify="end">
-                {auth
+                {isAuth
                     ?
                     <>
                         <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} selectable={false}>
