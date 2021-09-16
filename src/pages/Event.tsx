@@ -9,7 +9,7 @@ import { IEvent } from "../models/IEvent";
 const Event: React.FC = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const {fetchGuests, createEvent} = useActions()
-    const {guests, events, isLoading} = useTypedSelector(state => state.event)
+    const {guests, events, isLoadingEvents} = useTypedSelector(state => state.event)
     const showModal = () => {
         setIsModalVisible(true)
     }
@@ -17,12 +17,15 @@ const Event: React.FC = () => {
         setIsModalVisible(false);
     }
     const addNewEvent = (event: IEvent) => {
-        setIsModalVisible(false)
+        //setIsModalVisible(false)
         createEvent(event)
     }
     useEffect(() => {
         fetchGuests()
     }, [])
+    useEffect(() => {
+        setIsModalVisible(isLoadingEvents)
+    }, [isLoadingEvents])
 
     return(
         <Layout>

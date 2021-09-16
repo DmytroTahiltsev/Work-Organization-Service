@@ -20,7 +20,7 @@ const EventForm: React.FC<EventFormProps> = (props) => {
         guest: ''
     } as IEvent)
     const {user} = useTypedSelector(state => state.auth)
-    const {isLoading} = useTypedSelector(state => state.event)
+    const {isLoadingEvents} = useTypedSelector(state => state.event)
     const selectDate = (date: Moment | null) => {
         if(date){
             setEvent({...event, date: formatDate(date.toDate())})
@@ -66,7 +66,7 @@ const EventForm: React.FC<EventFormProps> = (props) => {
             </Form.Item>
             <Row justify="end">
             <Form.Item>
-                <Button type="primary" htmlType="submit" loading={isLoading} >
+                <Button type="primary" htmlType="submit" loading={isLoadingEvents} >
                     Create
                 </Button>
             </Form.Item>
