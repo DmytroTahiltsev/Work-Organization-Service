@@ -17,7 +17,7 @@ const App: React.FC = () => {
 
     }
   }, [])
-  return (
+  return ( 
     <Layout>
       <Navbar />
       <Layout.Content>
