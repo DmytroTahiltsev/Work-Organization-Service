@@ -1,25 +1,32 @@
-import { Button, Modal, Row } from "antd";
+import { Button, Layout, Modal, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import EventCalendar from "../components/EventCalendar";
 import EventForm from "../components/EventForm";
 import { useActions } from "../hooks/useActions";
 import { useTypedSelector } from "../hooks/useTypedSelector";
+import { IEvent } from "../models/IEvent";
 
 const Event: React.FC = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const {fetchGuests} = useActions()
-    const {guests, events} = useTypedSelector(state => state.event)
+    const {fetchGuests, createEvent} = useActions()
+    const {guests, events, isLoading} = useTypedSelector(state => state.event)
     const showModal = () => {
         setIsModalVisible(true)
     }
     const handleCancel = () => {
         setIsModalVisible(false);
     }
+    const addNewEvent = (event: IEvent) => {
+        setIsModalVisible(false)
+        createEvent(event)
+    }
     useEffect(() => {
         fetchGuests()
     }, [])
+
     return(
-        <div>
+        <Layout>
+            {JSON.stringify(events)}
             <EventCalendar events={[]} />
             <Row justify="center">
                 <Button onClick={showModal}>Add event</Button>
@@ -32,9 +39,10 @@ const Event: React.FC = () => {
             >
                 <EventForm 
                     guests={guests} 
+                    submit={addNewEvent}
                 />
             </Modal>
-        </div>
+        </Layout>
     )
 }
 export default Event

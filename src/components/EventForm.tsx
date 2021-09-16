@@ -3,10 +3,13 @@ import {Form, Row, Input, Button, DatePicker, Select} from 'antd'
 import { rules } from "./utils/rules" 
 import { IUser } from '../models/IUser'
 import { IEvent } from '../models/IEvent'
+import { Moment } from 'moment'
+import { formatDate } from './utils/date'
+import { useTypedSelector } from '../hooks/useTypedSelector'
 
 interface EventFormProps {
     guests: IUser[];
-
+    submit: (event: IEvent) => void
 }
 
 const EventForm: React.FC<EventFormProps> = (props) => {
@@ -16,8 +19,19 @@ const EventForm: React.FC<EventFormProps> = (props) => {
         description: '',
         guest: ''
     } as IEvent)
+    const {user} = useTypedSelector(state => state.auth)
+    const {isLoading} = useTypedSelector(state => state.event)
+    const selectDate = (date: Moment | null) => {
+        if(date){
+            setEvent({...event, date: formatDate(date.toDate())})
+        }
+
+    }
+    const submitForm = () => {
+        props.submit({...event, autor: user.username})
+    }
     return (
-        <Form>
+        <Form onFinish={submitForm}>
             <Form.Item
                 label="Event description"
                 name="description"
@@ -34,7 +48,7 @@ const EventForm: React.FC<EventFormProps> = (props) => {
                 rules={[rules.required()]}
             >
                 <DatePicker
-                
+                    onChange={(data) => selectDate(data)}
                 />
             </Form.Item>
             <Form.Item
@@ -52,7 +66,7 @@ const EventForm: React.FC<EventFormProps> = (props) => {
             </Form.Item>
             <Row justify="end">
             <Form.Item>
-                <Button type="primary" htmlType="submit" >
+                <Button type="primary" htmlType="submit" loading={isLoading} >
                     Create
                 </Button>
             </Form.Item>
