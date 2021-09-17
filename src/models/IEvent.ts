@@ -3,4 +3,5 @@ export interface IEvent {
     guest: string;
     date: string;
     description: string;
+    id: number;
 }

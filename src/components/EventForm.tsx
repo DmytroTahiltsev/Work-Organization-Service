@@ -17,7 +17,8 @@ const EventForm: React.FC<EventFormProps> = (props) => {
         autor: '',
         date: '',
         description: '',
-        guest: ''
+        guest: '',
+        id: Date.now()
     } as IEvent)
     const {user} = useTypedSelector(state => state.auth)
     const {isLoadingEvents} = useTypedSelector(state => state.event)
@@ -45,7 +46,7 @@ const EventForm: React.FC<EventFormProps> = (props) => {
             <Form.Item
                 label="Event date"
                 name="date"
-                rules={[rules.required()]}
+                rules={[rules.required(), rules.isDateAfter("You can`t create event in the past")]}
             >
                 <DatePicker
                     onChange={(data) => selectDate(data)}

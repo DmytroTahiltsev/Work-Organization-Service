@@ -8,8 +8,9 @@ import { IEvent } from "../models/IEvent";
 
 const Event: React.FC = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const {fetchGuests, createEvent} = useActions()
+    const {fetchGuests, createEvent, fetchEvents} = useActions()
     const {guests, events, isLoadingEvents} = useTypedSelector(state => state.event)
+    const {user} = useTypedSelector(state => state.auth)
     const showModal = () => {
         setIsModalVisible(true)
     }
@@ -17,11 +18,11 @@ const Event: React.FC = () => {
         setIsModalVisible(false);
     }
     const addNewEvent = (event: IEvent) => {
-        //setIsModalVisible(false)
         createEvent(event)
     }
     useEffect(() => {
         fetchGuests()
+        fetchEvents(user.username)
     }, [])
     useEffect(() => {
         setIsModalVisible(isLoadingEvents)
@@ -29,8 +30,7 @@ const Event: React.FC = () => {
 
     return(
         <Layout>
-            {JSON.stringify(events)}
-            <EventCalendar events={[]} />
+            <EventCalendar events={events} />
             <Row justify="center">
                 <Button onClick={showModal}>Add event</Button>
             </Row>
