@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { EventState } from './types'
+import { EventActionEnum, EventState } from './types'
 import { IUser } from '../../../models/IUser'
 import { IEvent } from '../../../models/IEvent'
 
@@ -38,16 +38,16 @@ const initialState: EventState = {
   },
 })
 export const fetchGuests = () => ({
-    type: "FETCH_GUESTS",
+    type: EventActionEnum.FETCH_GUESTS,
 
   });
 export const createEvent = (payload: IEvent) => ({
-    type: "CREATE_EVENT",
+    type: EventActionEnum.CREATE_EVENT,
     payload
 
   });
 export const fetchEvents = (payload: string) => ({
-    type: "FETCH_EVENTS",
+    type: EventActionEnum.FETCH_EVENTS,
     payload
 
   });

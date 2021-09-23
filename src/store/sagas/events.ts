@@ -1,29 +1,29 @@
 import { takeEvery, put, call, takeLatest } from 'redux-saga/effects';
-import {AuthActionCreator, EventActionCreator} from '../slices'
+import { EventActionCreator} from '../slices'
 import { PayloadAction } from '@reduxjs/toolkit';
 import UserService from '../../api/UserService';
-import { IUser } from '../../models/IUser';
 import { IEvent } from '../../models/IEvent';
+import { ServiceResponce } from './types';
+import { EventActionEnum } from '../slices/event/types';
 
 
 function* fetchGuests(){
     try{
         yield put(EventActionCreator.setIsLoadingGuests(true))
-        const response: IUser[] = yield call(UserService.getUsers)
-        console.log(response)
-        yield put(EventActionCreator.setGuests(response))
+        const response: ServiceResponce = yield call(UserService.getUsers)
+        yield put(EventActionCreator.setGuests(response.data))
         yield put(EventActionCreator.setIsLoadingGuests(false))
 
     } catch(e){
         console.log(e)
     }
 }
-function* createEvent(data: PayloadAction<IEvent>) {
+function* createEvent(action: PayloadAction<IEvent>) {
     try{
         yield put(EventActionCreator.setIsLoadingEvents(true))
         const events = localStorage.getItem('event') || '[]'
         const json = JSON.parse(events) as IEvent[]
-        json.push(data.payload)
+        json.push(action.payload)
         yield put(EventActionCreator.setEvents(json))
         localStorage.setItem('event', JSON.stringify(json))
         yield put(EventActionCreator.setIsLoadingEvents(false))
@@ -31,12 +31,12 @@ function* createEvent(data: PayloadAction<IEvent>) {
         console.log(e)
     }
 }
-function* fetchEvents(data: PayloadAction<string>) {
+function* fetchEvents(action: PayloadAction<string>) {
     try{
         yield put(EventActionCreator.setIsLoadingCalendar(true))
         const events = localStorage.getItem('event') || '[]'
         const json = JSON.parse(events) as IEvent[]
-        const currentUserEvents = json.filter(event => event.autor === data.payload || event.guest === data.payload)
+        const currentUserEvents = json.filter(event => event.autor === action.payload || event.guest === action.payload)
         yield put(EventActionCreator.setEvents(currentUserEvents))
         yield put(EventActionCreator.setIsLoadingCalendar(false))
     } catch(e) {
@@ -47,9 +47,9 @@ function* fetchEvents(data: PayloadAction<string>) {
 
 
 function* eventsSagaWatcher() {
-    yield takeEvery("FETCH_GUESTS", fetchGuests);
-    yield takeEvery("CREATE_EVENT", createEvent);
-    yield takeEvery("FETCH_EVENTS", fetchEvents);
+    yield takeEvery(EventActionEnum.FETCH_GUESTS, fetchGuests);
+    yield takeEvery(EventActionEnum.CREATE_EVENT, createEvent);
+    yield takeEvery(EventActionEnum.FETCH_EVENTS, fetchEvents);
   }
   
   export default eventsSagaWatcher;

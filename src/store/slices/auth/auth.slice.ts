@@ -1,11 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { AuthState } from './types'
+import { AuthActionsEnum, AuthState, LoginState } from './types'
 import { IUser } from '../../../models/IUser'
 
-export interface UserDataState  {
-  username: string;
-  password: string;
-}
+
 
 const initialState: AuthState = {
     isAuth: false,
@@ -34,12 +31,12 @@ const initialState: AuthState = {
     }
   },
 })
-export const login = (payload: UserDataState) => ({
-    type: "LOGIN",
+export const login = (payload: LoginState) => ({
+    type: AuthActionsEnum.LOGIN,
     payload,
   });
   export const logout = () => ({
-    type: "LOGOUT"
+    type: AuthActionsEnum.LOGOUT
   });
 
 const AuthActionCreator = {

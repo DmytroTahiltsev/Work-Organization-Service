@@ -12,7 +12,7 @@ const EventsList: React.FC<EventsListProps> = (props) => {
     return(
         <ul>
             {props.currentDateEvents.map(event =>
-                <EventsListItem event={event} />
+                <EventsListItem event={event} key={event.id} />
             )}
         </ul>
     )
