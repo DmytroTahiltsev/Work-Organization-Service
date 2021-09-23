@@ -1,10 +1,14 @@
 import { useDispatch } from "react-redux"
 import { bindActionCreators } from "redux"
 import { AppDispatch } from "../store"
-import { allActionCreators } from "../store/reducers/action-creators"
+import { EventActionCreator } from "../store/slices"
+import { AuthActionCreator } from "../store/slices"
 
 
 export const useActions = () => {
     const dispatch = useDispatch()
-    return bindActionCreators(allActionCreators, dispatch)
-}
+    return bindActionCreators({
+        ...AuthActionCreator,
+        ...EventActionCreator
+    }, dispatch)
+}  

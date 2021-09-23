@@ -7,11 +7,11 @@ import { useActions } from './hooks/useActions';
 import { IUser } from './models/IUser';
 
 const App: React.FC = () => {
-  const {setUser, setIsAuth} = useActions()
+  const {setUser, setAuth} = useActions()
   useEffect(() => {
     if(localStorage.getItem('auth')) {
       setUser({username: localStorage.getItem('username' || '')} as IUser)
-      setIsAuth(true)
+      setAuth(true)
     }
     else{
 

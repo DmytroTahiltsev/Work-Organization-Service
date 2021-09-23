@@ -1,6 +1,6 @@
 import { IEvent } from "../../../models/IEvent";
 import { IUser } from "../../../models/IUser";
-import { SetIsLoadingAction } from "../auth/types";
+
 
 
 export interface EventState {
@@ -16,7 +16,10 @@ export enum EventActionEnum {
     SET_EVENTS = 'SET_EVENTS',
     SET_IS_LOADING_GUESTS = 'SET_IS_LOADING',
     SET_IS_LOADING_EVENTS = 'SET_IS_LOADING_EVENTS',
-    SET_IS_LOADING_CALENDAR = 'SET_IS_LOADING_CALENDAR'
+    SET_IS_LOADING_CALENDAR = 'SET_IS_LOADING_CALENDAR',
+    FETCH_GUESTS = "FETCH_GUESTS",
+    CREATE_EVENT = "CREATE_EVENT",
+    FETCH_EVENTS = "FETCH_EVENTS"
 }
 
 export interface SetGuestAction {

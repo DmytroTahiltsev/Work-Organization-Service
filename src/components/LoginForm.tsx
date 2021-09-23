@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {Form, Input, Button, Row, Divider} from 'antd'
 import { rules } from "./utils/rules";
 import { useDispatch } from "react-redux";
-import { AuthActionCreators } from "../store/reducers/auth/actions-creators";
+import { AuthActionCreator } from "../store/slices";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 import { useActions } from "../hooks/useActions";
 const LoginForm: React.FC = () => {
@@ -11,7 +11,7 @@ const LoginForm: React.FC = () => {
     const [password, setPassword] = useState('')
     const {login} = useActions()
     const submit = () => {
-        login(username, password)
+        login({username, password})
     }
 
     return(

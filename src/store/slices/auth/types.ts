@@ -1,5 +1,9 @@
 import { IUser } from "../../../models/IUser";
 
+export interface LoginState  {
+    username: string;
+    password: string;
+  }
 export interface AuthState {
     isAuth: boolean;
     user: IUser;
@@ -12,6 +16,8 @@ export enum AuthActionsEnum  {
     SET_USER = "SET_USER",
     SET_IS_LOADING = "SET_IS_LOADING",
     SET_ERROR = "SET_ERROR",
+    LOGIN = "LOGIN",
+    LOGOUT = "LOGOUT"
 }
 
 export interface SetAuthAction {

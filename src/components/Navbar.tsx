@@ -6,7 +6,7 @@ import { useHistory } from "react-router";
 import { useActions } from "../hooks/useActions";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 import { RouteNames } from "../router";
-import { AuthActionCreators } from "../store/reducers/auth/actions-creators";
+import { AuthActionCreator } from "../store/slices";
 
 const Navbar: React.FC = () => {
     const {isAuth, user} = useTypedSelector(state => state.auth)
