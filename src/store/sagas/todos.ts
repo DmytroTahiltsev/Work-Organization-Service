@@ -14,7 +14,6 @@ function* fetchTodos(action: PayloadAction<string>) {
         const response: ServiceResponceTodo = yield call(TodoService.getTodos)
         const currentUserTodos = response.data.filter(todo => todo.autor === action.payload || todo.executor === action.payload)
         yield put(TodoActionCreator.setTodos(currentUserTodos))
-        console.log(currentUserTodos)
         yield put(TodoActionCreator.setIsLoadingTodos(false))
     } catch(e) {
         console.log(e)

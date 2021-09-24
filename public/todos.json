@@ -22,5 +22,13 @@
         "title": "title3",
         "description": "description3",
         "status": "APPOINTED"        
+    },
+    {
+        "id": 4,
+        "autor": "user1",
+        "executor": "user1",
+        "title": "title4",
+        "description": "description4",
+        "status": "DONE"        
     }
 ]
