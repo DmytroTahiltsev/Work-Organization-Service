@@ -4,6 +4,16 @@
 .h100{
     height: calc(100vh - 64px);
 }
+.TodoList{
+    margin: 100px 150px;
+    height: auto;
+}
+.TodoList__Item{
+    padding: 10px 15px 10px 25px;
+    margin: 25px 15px;
+    background-color: rgb(209, 203, 199);
+    border-radius: 15%;
+}
 
 
 

@@ -3,14 +3,16 @@ import { EventActionCreator} from '../slices'
 import { PayloadAction } from '@reduxjs/toolkit';
 import UserService from '../../api/UserService';
 import { IEvent } from '../../models/IEvent';
-import { ServiceResponce } from './types';
+import { ServiceResponceUser } from './types';
 import { EventActionEnum } from '../slices/event/types';
 
+const delay = (ms: number) => new Promise(res => setTimeout(res, ms))
 
 function* fetchGuests(){
     try{
         yield put(EventActionCreator.setIsLoadingGuests(true))
-        const response: ServiceResponce = yield call(UserService.getUsers)
+        yield delay(500)
+        const response: ServiceResponceUser = yield call(UserService.getUsers)
         yield put(EventActionCreator.setGuests(response.data))
         yield put(EventActionCreator.setIsLoadingGuests(false))
 
@@ -21,6 +23,7 @@ function* fetchGuests(){
 function* createEvent(action: PayloadAction<IEvent>) {
     try{
         yield put(EventActionCreator.setIsLoadingEvents(true))
+        yield delay(500)
         const events = localStorage.getItem('event') || '[]'
         const json = JSON.parse(events) as IEvent[]
         json.push(action.payload)
@@ -34,6 +37,7 @@ function* createEvent(action: PayloadAction<IEvent>) {
 function* fetchEvents(action: PayloadAction<string>) {
     try{
         yield put(EventActionCreator.setIsLoadingCalendar(true))
+        yield delay(500)
         const events = localStorage.getItem('event') || '[]'
         const json = JSON.parse(events) as IEvent[]
         const currentUserEvents = json.filter(event => event.autor === action.payload || event.guest === action.payload)
