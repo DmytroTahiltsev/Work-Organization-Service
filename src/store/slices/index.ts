@@ -7,3 +7,8 @@ export {
     reducer as eventsReducer,
     EventActionCreator
 } from './event/event.slice'
+
+export {
+    reducer as todosReducer,
+    TodoActionCreator 
+} from './todo/todo.slice'

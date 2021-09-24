@@ -5,11 +5,12 @@ import EventForm from "../components/EventForm";
 import { useActions } from "../hooks/useActions";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 import { IEvent } from "../models/IEvent";
+import Loader from "../components/UI/Loader/Loader";
 
 const Event: React.FC = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const {fetchGuests, createEvent, fetchEvents} = useActions()
-    const {guests, events, isLoadingEvents} = useTypedSelector(state => state.event)
+    const {guests, events, isLoadingEvents, isLoadingCalendar} = useTypedSelector(state => state.event)
     const {user} = useTypedSelector(state => state.auth)
     const showModal = () => {
         setIsModalVisible(true)
@@ -29,6 +30,12 @@ const Event: React.FC = () => {
     }, [isLoadingEvents])
 
     return(
+        isLoadingCalendar
+        ?
+        <div className="h100">
+            <Loader/>
+        </div> 
+        :
         <Layout>
             <EventCalendar events={events} />
             <Row justify="center">

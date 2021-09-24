@@ -4,6 +4,7 @@ import './App.css';
 import AppRouter from './components/AppRouter';
 import Navbar from './components/Navbar';
 import { useActions } from './hooks/useActions';
+import { ITodo } from './models/ITodo';
 import { IUser } from './models/IUser';
 
 const App: React.FC = () => {
@@ -28,3 +29,4 @@ const App: React.FC = () => {
 }
 
 export default App;
+ 

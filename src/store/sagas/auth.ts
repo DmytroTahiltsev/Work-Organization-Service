@@ -1,18 +1,19 @@
 import { takeEvery, put, call, takeLatest } from 'redux-saga/effects';
 import {AuthActionCreator} from '../slices'
-import { ServiceResponce } from './types';
+import { ServiceResponceUser } from './types';
 import { PayloadAction } from '@reduxjs/toolkit';
 import UserService from '../../api/UserService';
 import { IUser } from '../../models/IUser';
 import { AuthActionsEnum, LoginState } from '../slices/auth/types';
 
-
+const delay = (ms: number) => new Promise(res => setTimeout(res, ms))
 
 
 function* login(action: PayloadAction<LoginState>) {
     try{
         yield put(AuthActionCreator.setIsLoading(true))
-        const response: ServiceResponce = yield call(UserService.getUsers)
+        yield delay(500)
+        const response: ServiceResponceUser = yield call(UserService.getUsers)
         const mockUser = response.data.find(user => user.username === action.payload.username && user.password === action.payload.username) 
         if(mockUser){
             localStorage.setItem("auth", "true")

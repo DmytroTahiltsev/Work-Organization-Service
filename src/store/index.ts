@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import {authReducer, eventsReducer} from './slices'
+import {authReducer, eventsReducer, todosReducer} from './slices'
 import createSagaMiddleware from 'redux-saga'
 import rootSaga from './sagas'
 
@@ -7,7 +7,8 @@ const sagaMiddleware = createSagaMiddleware()
 const store = configureStore({
   reducer: {
     auth: authReducer,
-    event: eventsReducer
+    event: eventsReducer,
+    todo: todosReducer
   },
   middleware: [sagaMiddleware]
 })

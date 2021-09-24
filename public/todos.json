@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "autor": "user1",
+        "executor": "user2",
+        "title": "title1",
+        "description": "description1",
+        "status": "APPOINTED"
+    },
+    {
+        "id": 2,
+        "autor": "user1",
+        "executor": "admin",
+        "title": "title2",
+        "description": "description2",
+        "status": "IN PROCCESING"        
+    },
+    {
+        "id": 3,
+        "autor": "user2",
+        "executor": "user1",
+        "title": "title3",
+        "description": "description3",
+        "status": "APPOINTED"        
+    }
+]
