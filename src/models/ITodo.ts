@@ -1,3 +1,4 @@
+import { toArray } from "../components/utils/toArray"
 
 
 export enum TodoStatusEnum {
@@ -6,6 +7,7 @@ export enum TodoStatusEnum {
     DONE = "DONE"
 }
 export type TodoStatus = TodoStatusEnum.APPOINTED | TodoStatusEnum.IN_PROCCESING | TodoStatusEnum.DONE
+export const statuses = toArray(TodoStatusEnum)
 export interface ITodo {
     id: number;
     autor: string;

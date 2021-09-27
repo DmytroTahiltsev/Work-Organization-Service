@@ -15,7 +15,6 @@ const initialState: TodoState = {
   reducers: {
     setTodos: (state, action: PayloadAction<ITodo[]>) => {
         state.todos = action.payload
-        state.isLoadingTodos = true
     },
     setGuests: (state, action: PayloadAction<IUser[]>) => {
         state.guests = action.payload
@@ -25,17 +24,12 @@ const initialState: TodoState = {
     }
   },
 })
-/*export const login = (payload: LoginState) => ({
-    type: AuthActionsEnum.LOGIN,
-    payload,
-  });
-  export const logout = () => ({
-    type: AuthActionsEnum.LOGOUT
-  });*/
+
 export const fetchTodos = (payload: string) => ({
     type: TodoActionEnum.FETCH_TODOS,
     payload
 })
+
 
 const TodoActionCreator = {
     ...actions,

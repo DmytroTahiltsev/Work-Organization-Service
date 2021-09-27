@@ -20,8 +20,9 @@ function* fetchTodos(action: PayloadAction<string>) {
     }
 }
 
+
 function* todosSagaWatcher() {
-    yield takeEvery(TodoActionEnum.FETCH_TODOS, fetchTodos);
+    yield takeEvery(TodoActionEnum.FETCH_TODOS, fetchTodos)
 
   }
   
