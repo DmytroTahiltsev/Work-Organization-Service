@@ -21,7 +21,7 @@ const Todos: React.FC = () => {
             status = statusIndex > 0 ? statuses[statusIndex - 1] : statuses[statuses.length - 1]
         }
         else {
-            return
+            return  
         }
         setTodos(todos.reduce((acc, elem) => {
             if(elem.id === todo.id){
