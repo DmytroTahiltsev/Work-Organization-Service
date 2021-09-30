@@ -23,15 +23,20 @@ const Todos: React.FC = () => {
         else {
             return
         }
-        const newTodo : ITodo = {
-            id: todo.id,
-            autor: todo.autor,
-            executor: todo.executor,
-            title: todo.title,
-            description: todo.description,
-            status: status
-        }
-        setTodos([...todos.filter(elem => elem.id !== todo.id), newTodo])
+        setTodos(todos.reduce((acc, elem) => {
+            if(elem.id === todo.id){
+                const editedTodo : ITodo = {
+                    id: todo.id,
+                    autor: todo.autor,
+                    executor: todo.executor,
+                    title: todo.title,
+                    description: todo.description,
+                    status: status
+                }
+                return [...acc, editedTodo]
+            }
+            return [...acc, elem]
+        }, [] as ITodo[]))
     }
     useEffect(() => {
         fetchTodos(user.username)
