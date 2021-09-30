@@ -1,0 +1,40 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { TodoActionEnum, TodoState } from './types'
+import { ITodo } from '../../../models/ITodo'
+import { IUser } from '../../../models/IUser'
+
+const initialState: TodoState = {
+    todos: [],
+    guests: [],
+    isLoadingTodos: false
+}
+
+ const { reducer, actions } = createSlice({
+  name: 'auth',
+  initialState,
+  reducers: {
+    setTodos: (state, action: PayloadAction<ITodo[]>) => {
+        state.todos = action.payload
+    },
+    setGuests: (state, action: PayloadAction<IUser[]>) => {
+        state.guests = action.payload
+    },
+    setIsLoadingTodos: (state, action: PayloadAction<boolean>) => {
+        state.isLoadingTodos = action.payload
+    }
+  },
+})
+
+export const fetchTodos = (payload: string) => ({
+    type: TodoActionEnum.FETCH_TODOS,
+    payload
+})
+
+
+const TodoActionCreator = {
+    ...actions,
+    fetchTodos
+  };
+  
+
+  export { TodoActionCreator, reducer }
