@@ -31,13 +31,13 @@ const initialState: AuthState = {
     }
   },
 })
-export const login = (payload: LoginState) => ({
+const login = (payload: LoginState) => ({
     type: AuthActionsEnum.LOGIN,
     payload,
-  });
-  export const logout = () => ({
+  })
+const logout = () => ({
     type: AuthActionsEnum.LOGOUT
-  });
+  })
 
 const AuthActionCreator = {
     ...actions,

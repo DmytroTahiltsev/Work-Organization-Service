@@ -1,7 +1,7 @@
 import React from 'react'
-import { useActions } from '../hooks/useActions'
-import { useTypedSelector } from '../hooks/useTypedSelector'
-import { ITodo } from '../models/ITodo'
+import { useActions } from '../../hooks/useActions'
+import { useTypedSelector } from '../../hooks/useTypedSelector'
+import { ITodo } from '../../models/ITodo'
 
 interface TodoListItemProps {
     todo: ITodo;

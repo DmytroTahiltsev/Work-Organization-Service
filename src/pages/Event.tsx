@@ -1,7 +1,7 @@
 import { Button, Layout, Modal, Row } from "antd";
 import React, { useEffect, useState } from "react";
-import EventCalendar from "../components/EventCalendar";
-import EventForm from "../components/EventForm";
+import EventCalendar from "../components/Events/EventCalendar";
+import EventForm from "../components/Events/EventForm";
 import { useActions } from "../hooks/useActions";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 import { IEvent } from "../models/IEvent";

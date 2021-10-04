@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
 import {Form, Row, Input, Button, DatePicker, Select} from 'antd'
-import { rules } from "./utils/rules" 
-import { IUser } from '../models/IUser'
-import { ITodo, statuses } from '../models/ITodo'
-import { Moment } from 'moment'
-import { formatDate } from './utils/date'
-import { useTypedSelector } from '../hooks/useTypedSelector'
+import { rules } from "../utils/rules" 
+import { IUser } from '../../models/IUser'
+import { ITodo, statuses } from '../../models/ITodo'
+import { useTypedSelector } from '../../hooks/useTypedSelector'
 
 interface TodoFormProps {
     executors: IUser[];
@@ -21,7 +19,7 @@ const TodoForm: React.FC<TodoFormProps> = (props) => {
         status: statuses[0],
     } as ITodo)
     const {user} = useTypedSelector(state => state.auth)
-    const {isLoadingTodos} = useTypedSelector(state => state.todo)
+    const {isLoadingCreateTodo} = useTypedSelector(state => state.todo)
     const submitForm = () => {
         props.submit({...todo, autor: user.username, id: Date.now()})
     }
@@ -62,7 +60,7 @@ const TodoForm: React.FC<TodoFormProps> = (props) => {
             </Form.Item>
             <Row justify="end">
             <Form.Item>
-                <Button type="primary" htmlType="submit" loading={isLoadingTodos} >
+                <Button type="primary" htmlType="submit" loading={isLoadingCreateTodo} >
                     Create
                 </Button>
             </Form.Item>

@@ -37,20 +37,20 @@ const initialState: EventState = {
 
   },
 })
-export const fetchGuests = () => ({
+const fetchGuests = () => ({
     type: EventActionEnum.FETCH_GUESTS,
 
-  });
-export const createEvent = (payload: IEvent) => ({
+  })
+const createEvent = (payload: IEvent) => ({
     type: EventActionEnum.CREATE_EVENT,
     payload
 
-  });
-export const fetchEvents = (payload: string) => ({
+  })
+const fetchEvents = (payload: string) => ({
     type: EventActionEnum.FETCH_EVENTS,
     payload
 
-  });
+  })
 
 
 const EventActionCreator = {
@@ -58,7 +58,7 @@ const EventActionCreator = {
     fetchGuests,
     createEvent,
     fetchEvents
-  };
+  }
   
 
   export { EventActionCreator, reducer }

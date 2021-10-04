@@ -1,10 +1,10 @@
 import React from "react";
 import {Calendar} from 'antd'
-import { IEvent } from "../models/IEvent";
+import { IEvent } from "../../models/IEvent";
 import { Moment } from "moment";
-import { formatDate } from "./utils/date";
+import { formatDate } from "../utils/date";
 import EventsList from "./EventsList";
-import { useTypedSelector } from "../hooks/useTypedSelector";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
 
 
 interface EventCalendarProps {
