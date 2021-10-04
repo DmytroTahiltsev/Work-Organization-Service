@@ -1,23 +1,37 @@
 import React from 'react'
-import { ITodo, TodoStatus } from '../../models/ITodo'
-import TodoListItem from './TodoListItem'
-
+import { useActions } from '../../hooks/useActions'
+import { ITodo, statuses, TodoStatus, TodoStatusEnum } from '../../models/ITodo'
+import FiltredTodoList from './FiltredTodoList'
 interface TodoListProps {
-    filtredTodos: ITodo[];
-    status: TodoStatus;
-    borderColor?: string;
     deleteHandler: (id: number) => void;
     changeStatus: (todo: ITodo, direction: number) => void;
+    todos: ITodo[];
 }
 
-const TodoList: React.FC<TodoListProps> = ({filtredTodos, status, borderColor, deleteHandler, changeStatus}: TodoListProps) => {
+const TodoList: React.FC<TodoListProps> = ({todos, deleteHandler, changeStatus}: TodoListProps) => {
     return(
-        <div className="TodoList" style={{border: `1px solid ${borderColor}`}}>
-            <span style={{padding: "10px 15px", fontSize: "1.5rem", fontWeight: 800, textAlign: "center"}}>{status}</span>
-            {filtredTodos.map(todo =>
-                <TodoListItem key={todo.id} todo={todo} deleteHandler={deleteHandler} changeStatus={changeStatus} />    
-            )}
-        </div>
+        <div style={{display:"flex", justifyContent:"center"}}>
+                    <FiltredTodoList 
+                        filtredTodos={todos.filter(todo => todo.status === TodoStatusEnum.APPOINTED)}
+                        status={TodoStatusEnum.APPOINTED} 
+                        borderColor="red" 
+                        deleteHandler={deleteHandler}
+                        changeStatus={changeStatus}
+                        />
+                    <FiltredTodoList 
+                        filtredTodos={todos.filter(todo => todo.status === TodoStatusEnum.IN_PROCCESING)} 
+                        status={TodoStatusEnum.IN_PROCCESING} 
+                        borderColor="blue" 
+                        deleteHandler={deleteHandler}
+                        changeStatus={changeStatus}
+                        />
+                    <FiltredTodoList filtredTodos={todos.filter(todo => todo.status === TodoStatusEnum.DONE)}
+                        status={TodoStatusEnum.DONE} 
+                        borderColor="green" 
+                        deleteHandler={deleteHandler}
+                        changeStatus={changeStatus}
+                        /> 
+                </div>
     )
 }
 export default TodoList

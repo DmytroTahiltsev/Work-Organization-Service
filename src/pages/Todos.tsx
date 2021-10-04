@@ -1,11 +1,12 @@
 import { Layout, Row, Modal, Button } from "antd";
 import React, { useEffect, useState } from "react";
-import TodoList from "../components/Todos/TodoList";
+import FiltredTodoList from "../components/Todos/FiltredTodoList";
 import { useActions } from "../hooks/useActions";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 import { ITodo, TodoStatus, TodoStatusEnum, statuses} from "../models/ITodo";
 import TodoForm from "../components/Todos/TodoForm";
 import Loader from "../components/UI/Loader/Loader";
+import TodoList from "../components/Todos/TodoList";
 
 
 const Todos: React.FC = () => {
@@ -23,7 +24,9 @@ const Todos: React.FC = () => {
        createTodo(todo)
     }
     function deleteHandler(id: number){
+        console.log(id)
         setTodos(todos.filter(todo => todo.id !== id))
+        console.log(todos)
     }
     function changeStatus(todo: ITodo, direction: number){
         const statusIndex = statuses.indexOf(todo.status)
@@ -53,7 +56,6 @@ const Todos: React.FC = () => {
         }, [] as ITodo[]))
     }
     useEffect(() => {
-        fetchTodos(user.username)
         fetchExecutors()
     }, []) 
     useEffect(() => {
@@ -68,28 +70,7 @@ const Todos: React.FC = () => {
         :
         <Layout>
             <div className="h100" >
-                <div style={{display:"flex", justifyContent:"center"}}>
-                    <TodoList 
-                        filtredTodos={todos.filter(todo => todo.status === TodoStatusEnum.APPOINTED)}
-                        status={TodoStatusEnum.APPOINTED} 
-                        borderColor="red" 
-                        deleteHandler={deleteHandler}
-                        changeStatus={changeStatus}
-                        />
-                    <TodoList 
-                        filtredTodos={todos.filter(todo => todo.status === TodoStatusEnum.IN_PROCCESING)} 
-                        status={TodoStatusEnum.IN_PROCCESING} 
-                        borderColor="blue" 
-                        deleteHandler={deleteHandler}
-                        changeStatus={changeStatus}
-                        />
-                    <TodoList filtredTodos={todos.filter(todo => todo.status === TodoStatusEnum.DONE)}
-                        status={TodoStatusEnum.DONE} 
-                        borderColor="green" 
-                        deleteHandler={deleteHandler}
-                        changeStatus={changeStatus}
-                        /> 
-                </div>
+                <TodoList todos={todos} changeStatus={changeStatus} deleteHandler={deleteHandler}/>
                 <Row justify="center">
                     <Button onClick={showModal}>Add event</Button>
                 </Row>
