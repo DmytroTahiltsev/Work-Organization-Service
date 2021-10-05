@@ -1,6 +1,5 @@
 import { Layout, Row, Modal, Button } from "antd";
 import React, { useEffect, useState } from "react";
-import FiltredTodoList from "../components/Todos/FiltredTodoList";
 import { useActions } from "../hooks/useActions";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 import { ITodo, TodoStatus, TodoStatusEnum, statuses} from "../models/ITodo";
@@ -11,9 +10,10 @@ import TodoList from "../components/Todos/TodoList";
 
 const Todos: React.FC = () => {
     const [isModalVisible, setIsModalVisible] = useState(false)
-    const {todos, executors, isLoadingTodos} = useTypedSelector(state => state.todo)
+    const [isTodosChange, setIsTodosChange] = useState(false)
+    const {todos, executors, isLoadingTodos, isLoadingCreateTodo} = useTypedSelector(state => state.todo)
     const {user} = useTypedSelector(state => state.auth)
-    const {fetchTodos, setTodos, fetchExecutors, createTodo} = useActions()
+    const {fetchTodos, setTodos, fetchExecutors, createTodo, deleteTodo} = useActions()
     const showModal = () => {
         setIsModalVisible(true)
     }
@@ -22,11 +22,11 @@ const Todos: React.FC = () => {
     }
     const addNewTodo = (todo: ITodo) => {
        createTodo(todo)
+       setIsTodosChange(!isTodosChange)
     }
-    function deleteHandler(id: number){
-        console.log(id)
-        setTodos(todos.filter(todo => todo.id !== id))
-        console.log(todos)
+    const deleteHandler = (todo: ITodo) => { 
+        deleteTodo(todo)
+        setIsTodosChange(!isTodosChange)
     }
     function changeStatus(todo: ITodo, direction: number){
         const statusIndex = statuses.indexOf(todo.status)
@@ -60,7 +60,10 @@ const Todos: React.FC = () => {
     }, []) 
     useEffect(() => {
         fetchTodos(user.username)
-    }, [todos.length]) 
+    }, [isTodosChange]) 
+    useEffect(() => {
+        setIsModalVisible(isLoadingCreateTodo)
+    }, [isLoadingCreateTodo])
     return(
         isLoadingTodos
         ?

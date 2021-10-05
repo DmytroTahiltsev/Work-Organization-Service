@@ -5,7 +5,7 @@ import { ITodo } from '../../models/ITodo'
 
 interface TodoListItemProps {
     todo: ITodo;
-    deleteHandler: (id: number) => void;
+    deleteHandler: (id: ITodo) => void;
     changeStatus: (todo: ITodo, direction: number) => void;
 }
 
@@ -17,7 +17,7 @@ const TodoListItem: React.FC<TodoListItemProps> = ({todo, deleteHandler, changeS
                     {todo.title}
                 </div>
                 <div style ={{display:"flex"}}>
-                    <button onClick={() => deleteHandler(todo.id)}>delete</button>
+                    <button onClick={() => deleteHandler(todo)}>delete</button>
                     <button onClick={() => changeStatus(todo, -1)}>left</button>
                     <button onClick={() => changeStatus(todo, 1)}>right</button>
                 </div>

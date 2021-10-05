@@ -41,12 +41,17 @@ const createTodo = (payload: ITodo) => ({
     payload
 
 })
+const deleteTodo = (payload: ITodo) => ({
+    type: TodoActionEnum.DELETE_TODO,
+    payload
+})
 
 const TodoActionCreator = {
     ...actions,
     fetchTodos,
     fetchExecutors,
-    createTodo
+    createTodo,
+    deleteTodo
   }
   
 

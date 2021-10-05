@@ -3,7 +3,7 @@ import { useActions } from '../../hooks/useActions'
 import { ITodo, statuses, TodoStatus, TodoStatusEnum } from '../../models/ITodo'
 import FiltredTodoList from './FiltredTodoList'
 interface TodoListProps {
-    deleteHandler: (id: number) => void;
+    deleteHandler: (id: ITodo) => void;
     changeStatus: (todo: ITodo, direction: number) => void;
     todos: ITodo[];
 }

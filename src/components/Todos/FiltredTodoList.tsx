@@ -6,7 +6,7 @@ interface FiltredTodoListProps {
     filtredTodos: ITodo[];
     status: TodoStatus;
     borderColor?: string;
-    deleteHandler: (id: number) => void;
+    deleteHandler: (id: ITodo) => void;
     changeStatus: (todo: ITodo, direction: number) => void;
 }
 

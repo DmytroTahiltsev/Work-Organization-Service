@@ -33,6 +33,20 @@ function* createTodo(action: PayloadAction<ITodo>) {
         console.log(e)
     }
 }
+function* deleteTodo(action: PayloadAction<ITodo>) {
+    try{
+        yield delay(500)
+        const todos = localStorage.getItem('todo') || '[]'
+        const json = JSON.parse(todos) as ITodo[]
+        const filtered = json.filter(todo => todo.id !== action.payload.id)
+        //const filtredForCurrentUser = filtred.filter(todo => todo.autor === action.payload.autor || todo.executor === action.payload.executor)
+        localStorage.setItem('todo', JSON.stringify(filtered))
+        yield put(TodoActionCreator.setTodos(filtered))
+        //console.log(filtredForCurrentUser)
+    } catch(e){
+        console.log(e)
+    }
+}
 function* fetchTodos(action: PayloadAction<string>) {
     try{
         yield put(TodoActionCreator.setIsLoadingTodos(true))
@@ -52,6 +66,7 @@ function* todosSagaWatcher() {
     yield takeEvery(TodoActionEnum.FETCH_TODOS, fetchTodos)
     yield takeEvery(TodoActionEnum.FETCH_TODOS, fetchExecutors)
     yield takeEvery(TodoActionEnum.CREATE_TODO, createTodo)
+    yield takeEvery(TodoActionEnum.DELETE_TODO, deleteTodo)
   }
   
   export default todosSagaWatcher;
