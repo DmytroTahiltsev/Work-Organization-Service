@@ -24,8 +24,8 @@ const Todos: React.FC = () => {
        createTodo(todo)
        setIsTodosChange(!isTodosChange)
     }
-    const deleteHandler = (todo: ITodo) => { 
-        deleteTodo(todo)
+    const deleteHandler = (id: number) => { 
+        deleteTodo(id)
         setIsTodosChange(!isTodosChange)
     }
     function changeStatus(todo: ITodo, direction: number){

@@ -33,16 +33,14 @@ function* createTodo(action: PayloadAction<ITodo>) {
         console.log(e)
     }
 }
-function* deleteTodo(action: PayloadAction<ITodo>) {
+function* deleteTodo(action: PayloadAction<number>) {
     try{
         yield delay(500)
         const todos = localStorage.getItem('todo') || '[]'
         const json = JSON.parse(todos) as ITodo[]
-        const filtered = json.filter(todo => todo.id !== action.payload.id)
-        //const filtredForCurrentUser = filtred.filter(todo => todo.autor === action.payload.autor || todo.executor === action.payload.executor)
+        const filtered = json.filter(todo => todo.id !== action.payload)
         localStorage.setItem('todo', JSON.stringify(filtered))
         yield put(TodoActionCreator.setTodos(filtered))
-        //console.log(filtredForCurrentUser)
     } catch(e){
         console.log(e)
     }
