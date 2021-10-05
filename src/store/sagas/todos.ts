@@ -1,18 +1,45 @@
-import { takeEvery, put, call, takeLatest } from 'redux-saga/effects'
+import { takeEvery, put, call} from 'redux-saga/effects'
 import {TodoActionCreator} from '../slices'
 import { PayloadAction } from '@reduxjs/toolkit'
-import TodoService from '../../api/TodoService'
-import { ServiceResponceTodo } from './types'
+import UserService from '../../api/UserService'
+import { ServiceResponceUser } from './types'
 import { TodoActionEnum } from '../slices/todo/types'
+import { ITodo } from '../../models/ITodo'
+
 
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms))
 
+function* fetchExecutors(){
+    try{
+        yield delay(500)
+        const response: ServiceResponceUser = yield call(UserService.getUsers)
+        yield put(TodoActionCreator.setExecutors(response.data))
+
+    } catch(e){
+        console.log(e)
+    }
+}
+function* createTodo(action: PayloadAction<ITodo>) {
+    try{
+        yield put(TodoActionCreator.setIsLoadingCreateTodo(true))
+        yield delay(500)
+        const todos = localStorage.getItem('todo') || '[]'
+        const json = JSON.parse(todos) as ITodo[]
+        json.push(action.payload)
+        yield put(TodoActionCreator.setTodos(json))
+        localStorage.setItem('todo', JSON.stringify(json))
+        yield put(TodoActionCreator.setIsLoadingCreateTodo(false))
+    } catch(e){
+        console.log(e)
+    }
+}
 function* fetchTodos(action: PayloadAction<string>) {
     try{
         yield put(TodoActionCreator.setIsLoadingTodos(true))
         yield delay(500)
-        const response: ServiceResponceTodo = yield call(TodoService.getTodos)
-        const currentUserTodos = response.data.filter(todo => todo.autor === action.payload || todo.executor === action.payload)
+        const todos = localStorage.getItem('todo') || '[]'
+        const json = JSON.parse(todos) as ITodo[]
+        const currentUserTodos = json.filter(todo => todo.autor === action.payload || todo.executor === action.payload)
         yield put(TodoActionCreator.setTodos(currentUserTodos))
         yield put(TodoActionCreator.setIsLoadingTodos(false))
     } catch(e) {
@@ -23,7 +50,8 @@ function* fetchTodos(action: PayloadAction<string>) {
 
 function* todosSagaWatcher() {
     yield takeEvery(TodoActionEnum.FETCH_TODOS, fetchTodos)
-
+    yield takeEvery(TodoActionEnum.FETCH_TODOS, fetchExecutors)
+    yield takeEvery(TodoActionEnum.CREATE_TODO, createTodo)
   }
   
   export default todosSagaWatcher;

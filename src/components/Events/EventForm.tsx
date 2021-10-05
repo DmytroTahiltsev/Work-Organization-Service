@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import {Form, Row, Input, Button, DatePicker, Select} from 'antd'
-import { rules } from "./utils/rules" 
-import { IUser } from '../models/IUser'
-import { IEvent } from '../models/IEvent'
+import { rules } from "../utils/rules" 
+import { IUser } from '../../models/IUser'
+import { IEvent } from '../../models/IEvent'
 import { Moment } from 'moment'
-import { formatDate } from './utils/date'
-import { useTypedSelector } from '../hooks/useTypedSelector'
+import { formatDate } from '../utils/date'
+import { useTypedSelector } from '../../hooks/useTypedSelector'
+
 
 interface EventFormProps {
     guests: IUser[];

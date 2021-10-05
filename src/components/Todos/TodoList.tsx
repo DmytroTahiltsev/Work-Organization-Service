@@ -1,5 +1,5 @@
 import React from 'react'
-import { ITodo, TodoStatus } from '../models/ITodo'
+import { ITodo, TodoStatus } from '../../models/ITodo'
 import TodoListItem from './TodoListItem'
 
 interface TodoListProps {

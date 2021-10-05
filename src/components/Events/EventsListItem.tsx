@@ -1,6 +1,6 @@
 import React from 'react'
-import { useTypedSelector } from '../hooks/useTypedSelector'
-import { IEvent } from '../models/IEvent'
+import { useTypedSelector } from '../../hooks/useTypedSelector'
+import { IEvent } from '../../models/IEvent'
 
 interface EventsListItemProps {
     event: IEvent;

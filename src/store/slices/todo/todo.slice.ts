@@ -5,8 +5,9 @@ import { IUser } from '../../../models/IUser'
 
 const initialState: TodoState = {
     todos: [],
-    guests: [],
-    isLoadingTodos: false
+    executors: [],
+    isLoadingTodos: false,
+    isLoadingCreateTodo: false
 }
 
  const { reducer, actions } = createSlice({
@@ -16,25 +17,37 @@ const initialState: TodoState = {
     setTodos: (state, action: PayloadAction<ITodo[]>) => {
         state.todos = action.payload
     },
-    setGuests: (state, action: PayloadAction<IUser[]>) => {
-        state.guests = action.payload
+    setExecutors: (state, action: PayloadAction<IUser[]>) => {
+        state.executors = action.payload
     },
     setIsLoadingTodos: (state, action: PayloadAction<boolean>) => {
         state.isLoadingTodos = action.payload
+    },
+    setIsLoadingCreateTodo: (state, action: PayloadAction<boolean>) => {
+        state.isLoadingCreateTodo = action.payload
     }
   },
 })
 
-export const fetchTodos = (payload: string) => ({
+const fetchTodos = (payload: string) => ({
     type: TodoActionEnum.FETCH_TODOS,
     payload
 })
+const fetchExecutors = () => ({
+    type: TodoActionEnum.FETCH_EXECUTORS,
+})
+const createTodo = (payload: ITodo) => ({
+    type: TodoActionEnum.CREATE_TODO,
+    payload
 
+})
 
 const TodoActionCreator = {
     ...actions,
-    fetchTodos
-  };
+    fetchTodos,
+    fetchExecutors,
+    createTodo
+  }
   
 
   export { TodoActionCreator, reducer }

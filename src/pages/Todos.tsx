@@ -1,13 +1,27 @@
-import React, { useEffect } from "react";
-import TodoList from "../components/TodoList";
+import { Layout, Row, Modal, Button } from "antd";
+import React, { useEffect, useState } from "react";
+import TodoList from "../components/Todos/TodoList";
 import { useActions } from "../hooks/useActions";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 import { ITodo, TodoStatus, TodoStatusEnum, statuses} from "../models/ITodo";
+import TodoForm from "../components/Todos/TodoForm";
+import Loader from "../components/UI/Loader/Loader";
+
 
 const Todos: React.FC = () => {
-    const {todos} = useTypedSelector(state => state.todo)
+    const [isModalVisible, setIsModalVisible] = useState(false)
+    const {todos, executors, isLoadingTodos} = useTypedSelector(state => state.todo)
     const {user} = useTypedSelector(state => state.auth)
-    const {fetchTodos, setTodos} = useActions()
+    const {fetchTodos, setTodos, fetchExecutors, createTodo} = useActions()
+    const showModal = () => {
+        setIsModalVisible(true)
+    }
+    const handleCancel = () => {
+        setIsModalVisible(false);
+    }
+    const addNewTodo = (todo: ITodo) => {
+       createTodo(todo)
+    }
     function deleteHandler(id: number){
         setTodos(todos.filter(todo => todo.id !== id))
     }
@@ -21,7 +35,7 @@ const Todos: React.FC = () => {
             status = statusIndex > 0 ? statuses[statusIndex - 1] : statuses[statuses.length - 1]
         }
         else {
-            return  
+            return
         }
         setTodos(todos.reduce((acc, elem) => {
             if(elem.id === todo.id){
@@ -40,30 +54,60 @@ const Todos: React.FC = () => {
     }
     useEffect(() => {
         fetchTodos(user.username)
+        fetchExecutors()
     }, []) 
+    useEffect(() => {
+        fetchTodos(user.username)
+    }, [todos.length]) 
     return(
-        <div className="h100" style={{display:"flex", justifyContent:"center"}}>
-            <TodoList 
-                filtredTodos={todos.filter(todo => todo.status === TodoStatusEnum.APPOINTED)}
-                status={TodoStatusEnum.APPOINTED} 
-                borderColor="red" 
-                deleteHandler={deleteHandler}
-                changeStatus={changeStatus}
-                />
-            <TodoList 
-                filtredTodos={todos.filter(todo => todo.status === TodoStatusEnum.IN_PROCCESING)} 
-                status={TodoStatusEnum.IN_PROCCESING} 
-                borderColor="blue" 
-                deleteHandler={deleteHandler}
-                changeStatus={changeStatus}
-                />
-            <TodoList filtredTodos={todos.filter(todo => todo.status === TodoStatusEnum.DONE)}
-                 status={TodoStatusEnum.DONE} 
-                 borderColor="green" 
-                 deleteHandler={deleteHandler}
-                 changeStatus={changeStatus}
-                 /> 
-        </div>
+        isLoadingTodos
+        ?
+        <div className="h100">
+            <Loader/>
+        </div> 
+        :
+        <Layout>
+            <div className="h100" >
+                <div style={{display:"flex", justifyContent:"center"}}>
+                    <TodoList 
+                        filtredTodos={todos.filter(todo => todo.status === TodoStatusEnum.APPOINTED)}
+                        status={TodoStatusEnum.APPOINTED} 
+                        borderColor="red" 
+                        deleteHandler={deleteHandler}
+                        changeStatus={changeStatus}
+                        />
+                    <TodoList 
+                        filtredTodos={todos.filter(todo => todo.status === TodoStatusEnum.IN_PROCCESING)} 
+                        status={TodoStatusEnum.IN_PROCCESING} 
+                        borderColor="blue" 
+                        deleteHandler={deleteHandler}
+                        changeStatus={changeStatus}
+                        />
+                    <TodoList filtredTodos={todos.filter(todo => todo.status === TodoStatusEnum.DONE)}
+                        status={TodoStatusEnum.DONE} 
+                        borderColor="green" 
+                        deleteHandler={deleteHandler}
+                        changeStatus={changeStatus}
+                        /> 
+                </div>
+                <Row justify="center">
+                    <Button onClick={showModal}>Add event</Button>
+                </Row>
+                <Modal
+                    title="Add todo"
+                    visible={isModalVisible}
+                    footer={null}
+                    onCancel={handleCancel}
+                >
+                    <TodoForm 
+                        executors={executors} 
+                        submit={addNewTodo}
+                    />
+                </Modal>
+            </div>
+        </Layout>
+        
+
         
     )
 } 
