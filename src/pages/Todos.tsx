@@ -40,7 +40,7 @@ const Todos: React.FC = () => {
         else {
             return
         }
-        setTodos(todos.reduce((acc, elem) => {
+        const reduced = todos.reduce((acc, elem) => {
             if(elem.id === todo.id){
                 const editedTodo : ITodo = {
                     id: todo.id,
@@ -53,7 +53,9 @@ const Todos: React.FC = () => {
                 return [...acc, editedTodo]
             }
             return [...acc, elem]
-        }, [] as ITodo[]))
+        }, [] as ITodo[])
+        setTodos(reduced)
+        localStorage.setItem('todo', JSON.stringify(reduced))
     }
     useEffect(() => {
         fetchExecutors()
