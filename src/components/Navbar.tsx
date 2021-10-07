@@ -2,6 +2,7 @@ import { Layout, Menu, Row } from "antd";
 import { AntTreeNodeMouseEvent } from "antd/lib/tree";
 import React, { MouseEvent, SyntheticEvent, useEffect, useState } from "react";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 import { useActions } from "../hooks/useActions";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 import { RouteNames } from "../router";
@@ -32,16 +33,14 @@ const Navbar: React.FC = () => {
                             onClick={(item) => setSelectedKey(item.key)} 
                         > 
                             <Menu.Item 
-                                onClick={() => router.push(RouteNames.EVENT)}
                                 key={RouteNames.EVENT}
                             >
-                                Events
+                                <Link to={RouteNames.EVENT}>Events</Link>
                             </Menu.Item>
                             <Menu.Item 
-                                onClick={() => router.push(RouteNames.TODOS)}
                                 key={RouteNames.TODOS}
                             >
-                                Todos
+                                <Link to={RouteNames.TODOS}>Todos</Link>
                             </Menu.Item>
                         </Menu>   
                         <Menu
