@@ -1,18 +1,19 @@
 import { Layout, Row, Modal, Button } from "antd";
 import React, { useEffect, useState } from "react";
-import TodoList from "../components/Todos/TodoList";
 import { useActions } from "../hooks/useActions";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 import { ITodo, TodoStatus, TodoStatusEnum, statuses} from "../models/ITodo";
 import TodoForm from "../components/Todos/TodoForm";
 import Loader from "../components/UI/Loader/Loader";
+import TodoList from "../components/Todos/TodoList";
 
 
 const Todos: React.FC = () => {
     const [isModalVisible, setIsModalVisible] = useState(false)
-    const {todos, executors, isLoadingTodos} = useTypedSelector(state => state.todo)
+    const [isTodosChange, setIsTodosChange] = useState(false)
+    const {todos, executors, isLoadingTodos, isLoadingCreateTodo} = useTypedSelector(state => state.todo)
     const {user} = useTypedSelector(state => state.auth)
-    const {fetchTodos, setTodos, fetchExecutors, createTodo} = useActions()
+    const {fetchTodos, setTodos, fetchExecutors, createTodo, deleteTodo} = useActions()
     const showModal = () => {
         setIsModalVisible(true)
     }
@@ -21,9 +22,11 @@ const Todos: React.FC = () => {
     }
     const addNewTodo = (todo: ITodo) => {
        createTodo(todo)
+       setIsTodosChange(!isTodosChange)
     }
-    function deleteHandler(id: number){
-        setTodos(todos.filter(todo => todo.id !== id))
+    const deleteHandler = (id: number) => { 
+        deleteTodo(id)
+        setIsTodosChange(!isTodosChange)
     }
     function changeStatus(todo: ITodo, direction: number){
         const statusIndex = statuses.indexOf(todo.status)
@@ -37,7 +40,7 @@ const Todos: React.FC = () => {
         else {
             return
         }
-        setTodos(todos.reduce((acc, elem) => {
+        const reduced = todos.reduce((acc, elem) => {
             if(elem.id === todo.id){
                 const editedTodo : ITodo = {
                     id: todo.id,
@@ -50,15 +53,19 @@ const Todos: React.FC = () => {
                 return [...acc, editedTodo]
             }
             return [...acc, elem]
-        }, [] as ITodo[]))
+        }, [] as ITodo[])
+        setTodos(reduced)
+        localStorage.setItem('todo', JSON.stringify(reduced))
     }
     useEffect(() => {
-        fetchTodos(user.username)
         fetchExecutors()
     }, []) 
     useEffect(() => {
         fetchTodos(user.username)
-    }, [todos.length]) 
+    }, [isTodosChange]) 
+    useEffect(() => {
+        setIsModalVisible(isLoadingCreateTodo)
+    }, [isLoadingCreateTodo])
     return(
         isLoadingTodos
         ?
@@ -68,28 +75,7 @@ const Todos: React.FC = () => {
         :
         <Layout>
             <div className="h100" >
-                <div style={{display:"flex", justifyContent:"center"}}>
-                    <TodoList 
-                        filtredTodos={todos.filter(todo => todo.status === TodoStatusEnum.APPOINTED)}
-                        status={TodoStatusEnum.APPOINTED} 
-                        borderColor="red" 
-                        deleteHandler={deleteHandler}
-                        changeStatus={changeStatus}
-                        />
-                    <TodoList 
-                        filtredTodos={todos.filter(todo => todo.status === TodoStatusEnum.IN_PROCCESING)} 
-                        status={TodoStatusEnum.IN_PROCCESING} 
-                        borderColor="blue" 
-                        deleteHandler={deleteHandler}
-                        changeStatus={changeStatus}
-                        />
-                    <TodoList filtredTodos={todos.filter(todo => todo.status === TodoStatusEnum.DONE)}
-                        status={TodoStatusEnum.DONE} 
-                        borderColor="green" 
-                        deleteHandler={deleteHandler}
-                        changeStatus={changeStatus}
-                        /> 
-                </div>
+                <TodoList todos={todos} changeStatus={changeStatus} deleteHandler={deleteHandler}/>
                 <Row justify="center">
                     <Button onClick={showModal}>Add event</Button>
                 </Row>
