@@ -6,8 +6,6 @@ import { privateRoutes, publicRoutes, RouteNames } from "../router";
 
 const AppRouter: React.FC = () => {
     const {isAuth} = useTypedSelector(state => state.auth)
-    const location = useLocation();
-    console.log(location)
     return(
         isAuth 
             ?
