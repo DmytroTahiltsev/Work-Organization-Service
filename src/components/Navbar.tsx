@@ -42,6 +42,11 @@ const Navbar: React.FC = () => {
                             >
                                 <Link to={RouteNames.TODOS}>Todos</Link>
                             </Menu.Item>
+                            <Menu.Item 
+                                key={RouteNames.ABOUT}
+                            >
+                                <Link to={RouteNames.ABOUT}>About</Link>
+                            </Menu.Item>
                         </Menu>   
                         <Menu
                             theme="dark"
