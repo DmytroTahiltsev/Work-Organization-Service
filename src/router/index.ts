@@ -3,7 +3,7 @@ import About from "../pages/About";
 import Event from "../pages/Event";
 import Login from "../pages/Login";
 import Todos from "../pages/Todos";
-
+import Error from "../pages/Error";
 export interface IRoute {
     path: string;
     component: React.ComponentType;
@@ -15,6 +15,7 @@ export enum RouteNames {
     EVENT = '/event',
     TODOS = '/todos',
     ABOUT = '/about'
+
 }
 
 export const publicRoutes: IRoute[] = [
@@ -25,4 +26,5 @@ export const privateRoutes: IRoute[] = [
     {path: RouteNames.EVENT, exact: true, component: Event},
     {path: RouteNames.TODOS, exact: true, component: Todos},
     {path: RouteNames.ABOUT, exact: true, component: About}
+
 ]
