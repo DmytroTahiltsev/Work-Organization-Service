@@ -2,7 +2,7 @@ import { Layout, Row, Modal, Button } from "antd";
 import React, { useEffect, useState } from "react";
 import { useActions } from "../hooks/useActions";
 import { useTypedSelector } from "../hooks/useTypedSelector";
-import { ITodo, TodoStatus, TodoStatusEnum, statuses} from "../models/ITodo";
+import { ITodo, TodoStatus, statuses} from "../models/ITodo";
 import TodoForm from "../components/Todos/TodoForm";
 import Loader from "../components/UI/Loader/Loader";
 import TodoList from "../components/Todos/TodoList";

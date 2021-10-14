@@ -24,7 +24,9 @@ const Navbar: React.FC = () => {
                     ?
                     <>
                         <div style={{color: 'white', marginRight: 15}}>
-                            {user.username}
+                            <Link to={RouteNames.PROFILE}>
+                                {user.username}
+                            </Link>
                         </div>
                         <Menu
                             theme="dark"

@@ -2,6 +2,7 @@ import React from "react";
 import About from "../pages/About";
 import Event from "../pages/Event";
 import Login from "../pages/Login";
+import Profile from "../pages/Profile";
 import Todos from "../pages/Todos";
 import Error from "../pages/Error";
 export interface IRoute {
@@ -14,7 +15,8 @@ export enum RouteNames {
     LOGIN = '/login',
     EVENT = '/event',
     TODOS = '/todos',
-    ABOUT = '/about'
+    ABOUT = '/about',
+    PROFILE = '/profile'
 
 }
 
@@ -25,6 +27,7 @@ export const publicRoutes: IRoute[] = [
 export const privateRoutes: IRoute[] = [
     {path: RouteNames.EVENT, exact: true, component: Event},
     {path: RouteNames.TODOS, exact: true, component: Todos},
-    {path: RouteNames.ABOUT, exact: true, component: About}
+    {path: RouteNames.ABOUT, exact: true, component: About},
+    {path: RouteNames.PROFILE, exact: true, component: Profile}
 
 ]
